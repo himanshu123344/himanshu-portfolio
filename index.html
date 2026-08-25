@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Craftloop Digital — Himanshu Verma | WordPress & Frontend Developer</title>
+<meta name="description" content="Craftloop Digital — WordPress, WooCommerce & Frontend development for real estate, luxury transport, beauty and service businesses across the US, UK & Europe.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0e1015;
+    --ink-2:#161a22;
+    --ink-3:#1e2430;
+    --parchment:#efe9dd;
+    --parchment-dim:#a9a49a;
+    --brass:#c9a15a;
+    --brass-bright:#e3bd78;
+    --sage:#6f9385;
+    --line:rgba(239,233,221,0.12);
+    --radius:2px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--parchment);
+    font-family:'Inter', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+  h1,h2,h3,h4{font-family:'Fraunces', serif; font-weight:600; line-height:1.08; letter-spacing:-0.01em;}
+  a{color:inherit; text-decoration:none;}
+  .mono{font-family:'Space Mono', monospace;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  section{position:relative;}
+  ::selection{background:var(--brass); color:var(--ink);}
+
+  /* Focus visibility */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+    outline:2px solid var(--brass-bright); outline-offset:3px;
+  }
+
+  /* ===== NAV ===== */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(14,16,21,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{display:flex; align-items:center; justify-content:space-between; height:78px;}
+  .logo{display:flex; flex-direction:column; line-height:1.1;}
+  .logo .name{font-family:'Fraunces', serif; font-size:19px; font-weight:600; letter-spacing:0.01em;}
+  .logo .sub{font-family:'Space Mono', monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--brass); margin-top:3px;}
+  .navlinks{display:flex; gap:36px; align-items:center;}
+  .navlinks a{font-size:14px; color:var(--parchment-dim); transition:color .25s;}
+  .navlinks a:hover{color:var(--parchment);}
+  .nav-cta{
+    font-family:'Space Mono', monospace; font-size:12px; letter-spacing:0.05em;
+    border:1px solid var(--brass); color:var(--brass-bright);
+    padding:9px 18px; border-radius:var(--radius); transition:all .25s;
+  }
+  .nav-cta:hover{background:var(--brass); color:var(--ink);}
+  .navtoggle{display:none;}
+
+  /* ===== HERO ===== */
+  .hero{
+    padding:190px 0 120px;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:center;
+    background:
+      radial-gradient(ellipse 900px 500px at 85% -10%, rgba(201,161,90,0.14), transparent 60%),
+      var(--ink);
+  }
+  .eyebrow{
+    font-family:'Space Mono', monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--sage); display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .eyebrow::before{content:''; width:26px; height:1px; background:var(--sage);}
+  .hero h1{font-size:clamp(38px, 5vw, 62px); margin-bottom:22px;}
+  .hero h1 em{font-style:italic; color:var(--brass-bright);}
+  .hero p.lede{font-size:18px; color:var(--parchment-dim); max-width:520px; margin-bottom:36px;}
+  .hero-ctas{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:56px;}
+  .btn-primary{
+    background:var(--brass); color:var(--ink); font-weight:600; font-size:14px;
+    padding:15px 28px; border-radius:var(--radius); border:1px solid var(--brass);
+    transition:all .25s; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary:hover{background:var(--brass-bright); border-color:var(--brass-bright); transform:translateY(-1px);}
+  .btn-ghost{
+    color:var(--parchment); font-size:14px; padding:15px 26px; border-radius:var(--radius);
+    border:1px solid var(--line); transition:all .25s;
+  }
+  .btn-ghost:hover{border-color:var(--parchment-dim);}
+  .stat-row{display:flex; gap:44px; flex-wrap:wrap;}
+  .stat{border-left:1px solid var(--line); padding-left:16px;}
+  .stat .num{font-family:'Fraunces', serif; font-size:30px; color:var(--brass-bright); font-weight:600;}
+  .stat .label{font-family:'Space Mono', monospace; font-size:11px; color:var(--parchment-dim); letter-spacing:0.05em; margin-top:2px;}
+
+  /* Hero loop graphic */
+  .hero-art{display:flex; align-items:center; justify-content:center;}
+  .loop-ring{width:100%; max-width:380px;}
+  .loop-ring circle.track{fill:none; stroke:var(--line); stroke-width:1;}
+  .loop-ring circle.progress{
+    fill:none; stroke:var(--brass); stroke-width:1.6; stroke-linecap:round;
+    stroke-dasharray:6 10; transform-origin:center; animation:spin 26s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .loop-node{fill:var(--ink); stroke:var(--brass); stroke-width:1.4;}
+  .loop-node-dot{fill:var(--brass-bright);}
+  .loop-center-label{font-family:'Space Mono', monospace; font-size:10px; fill:var(--parchment-dim); letter-spacing:0.08em; text-transform:uppercase;}
+  .loop-center-word{font-family:'Fraunces', serif; font-size:22px; fill:var(--parchment); font-weight:600;}
+
+  /* ===== SECTION HEADERS ===== */
+  .sec-head{max-width:640px; margin-bottom:56px;}
+  .sec-head .eyebrow{margin-bottom:14px;}
+  .sec-head h2{font-size:clamp(28px, 3.4vw, 42px); margin-bottom:14px;}
+  .sec-head p{color:var(--parchment-dim); font-size:16px;}
+  .section-pad{padding:110px 0;}
+  .divider{border-top:1px solid var(--line);}
+
+  /* ===== WORK ===== */
+  .work-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:28px;}
+  .card{
+    background:var(--ink-2); border:1px solid var(--line); border-radius:var(--radius);
+    overflow:hidden; transition:transform .3s, border-color .3s;
+  }
+  .card:hover{transform:translateY(-4px); border-color:rgba(201,161,90,0.4);}
+  .card-visual{
+    position:relative; height:190px; display:flex; align-items:center; justify-content:center;
+    border-bottom:1px solid var(--line);
+  }
+  .card-visual .browser-bar{
+    position:absolute; top:0; left:0; right:0; height:26px; background:rgba(14,16,21,0.5);
+    display:flex; align-items:center; gap:5px; padding:0 10px; border-bottom:1px solid rgba(239,233,221,0.08);
+  }
+
+  .glyph img{
+    width: 367px;
+    height: 368px;
+    object-fit: inherit;
+  }
+  .browser-bar span{width:6px; height:6px; border-radius:50%; background:rgba(239,233,221,0.25);}
+  .card-visual .glyph{font-size:44px; opacity:0.9; filter:drop-shadow(0 4px 14px rgba(0,0,0,0.35));}
+  .card-body{padding:26px 26px 28px;}
+  .card-industry{font-family:'Space Mono', monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--brass);}
+  .card h3{font-size:21px; margin:10px 0 10px;}
+  .card p{color:var(--parchment-dim); font-size:14.5px; margin-bottom:18px;}
+  .card-link{font-size:13px; color:var(--parchment); display:inline-flex; align-items:center; gap:6px; border-bottom:1px solid var(--brass); padding-bottom:2px;}
+  .card-link:hover{color:var(--brass-bright);}
+  .note-line{margin-top:36px; font-size:13px; color:var(--parchment-dim); font-style:italic;}
+
+  /* ===== PROCESS (the loop, spelled out) ===== */
+  .process-list{display:flex; flex-direction:column;}
+  .p-step{display:grid; grid-template-columns:90px 1fr; gap:28px; padding:30px 0; border-bottom:1px solid var(--line); align-items:start;}
+  .p-step:first-child{border-top:1px solid var(--line);}
+  .p-num{font-family:'Space Mono', monospace; font-size:13px; color:var(--brass); padding-top:4px;}
+  .p-title{font-size:22px; margin-bottom:8px;}
+  .p-desc{color:var(--parchment-dim); font-size:15px; max-width:600px;}
+
+  /* ===== INDUSTRIES ===== */
+  .tag-cloud{display:flex; flex-wrap:wrap; gap:12px;}
+  .tag{
+    font-family:'Space Mono', monospace; font-size:13px; padding:10px 18px;
+    border:1px solid var(--line); border-radius:var(--radius); color:var(--parchment-dim);
+    transition:all .25s;
+  }
+  .tag:hover{border-color:var(--brass); color:var(--parchment);}
+
+  /* ===== CONTACT ===== */
+  .contact-grid{display:grid; grid-template-columns:0.85fr 1.15fr; gap:64px;}
+  .contact-info h2{font-size:clamp(28px,3.4vw,40px); margin-bottom:20px;}
+  .contact-info p{color:var(--parchment-dim); margin-bottom:30px; max-width:420px;}
+  .info-row{display:flex; align-items:baseline; gap:14px; padding:14px 0; border-top:1px solid var(--line);}
+  .info-row:last-of-type{border-bottom:1px solid var(--line);}
+  .info-row .k{font-family:'Space Mono', monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--sage); width:90px; flex-shrink:0;}
+  .info-row .v{font-size:15px;}
+  .info-row a.v:hover{color:var(--brass-bright);}
+
+  form{display:flex; flex-direction:column; gap:20px;}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  label{font-family:'Space Mono', monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--parchment-dim); display:block; margin-bottom:8px;}
+  input, textarea, select{
+    width:100%; background:var(--ink-2); border:1px solid var(--line); color:var(--parchment);
+    padding:13px 14px; font-family:'Inter', sans-serif; font-size:14.5px; border-radius:var(--radius);
+    transition:border-color .25s;
+  }
+  input::placeholder, textarea::placeholder{color:rgba(169,164,154,0.55);}
+  input:focus, textarea:focus, select:focus{border-color:var(--brass); outline:none;}
+  textarea{min-height:130px; resize:vertical;}
+  select{appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--parchment-dim) 50%), linear-gradient(135deg, var(--parchment-dim) 50%, transparent 50%); background-position:calc(100% - 20px) center, calc(100% - 15px) center; background-size:5px 5px, 5px 5px; background-repeat:no-repeat;}
+  .submit-btn{
+    background:var(--brass); color:var(--ink); font-weight:700; font-size:14px; letter-spacing:0.02em;
+    padding:16px 30px; border:none; border-radius:var(--radius); cursor:pointer; transition:all .25s; align-self:flex-start;
+  }
+  .submit-btn:hover{background:var(--brass-bright); transform:translateY(-1px);}
+  .form-note{font-size:12px; color:var(--parchment-dim);}
+  .form-status{font-size:13.5px; margin-top:4px;}
+  .form-status.ok{color:var(--sage);}
+  .form-status.err{color:#c97a6f;}
+
+  footer{border-top:1px solid var(--line); padding:40px 0; }
+  .footer-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;}
+  .footer-row .mono{font-size:12px; color:var(--parchment-dim);}
+  .footer-links{display:flex; gap:24px;}
+  .footer-links a{font-size:13px; color:var(--parchment-dim); transition:color .25s;}
+  .footer-links a:hover{color:var(--brass-bright);}
+
+  @media (max-width: 860px){
+    .navlinks{display:none;}
+    .hero{grid-template-columns:1fr; padding-top:150px;}
+    .hero-art{order:-1; margin-bottom:20px;}
+    .loop-ring{max-width:230px;}
+    .contact-grid{grid-template-columns:1fr; gap:48px;}
+    .form-row{grid-template-columns:1fr;}
+    .p-step{grid-template-columns:50px 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="#top" class="logo">
+      <span class="name">Craftloop Digital</span>
+      <span class="sub">Himanshu Verma</span>
+    </a>
+    <div class="navlinks">
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#industries">Industries</a>
+      <a href="#contact" class="nav-cta">Start a project</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div>
+      <div class="eyebrow">WordPress &amp; Frontend Developer</div>
+      <h1>I build websites that turn <em>visitors</em> into <em>inquiries.</em></h1>
+      <p class="lede">Craftloop Digital designs and develops WordPress, WooCommerce and custom frontend experiences for real estate, luxury transport, beauty and service-based businesses across the US, UK and Europe.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn-primary">Start a project →</a>
+        <a href="#work" class="btn-ghost">See the work</a>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><div class="num">40+</div><div class="label">Sites shipped</div></div>
+        <div class="stat"><div class="num">2+ yrs</div><div class="label">In practice</div></div>
+        <div class="stat"><div class="num">US·UK·EU</div><div class="label">Client markets</div></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <svg class="loop-ring" viewBox="0 0 340 340">
+        <circle class="track" cx="170" cy="170" r="150"/>
+        <circle class="progress" cx="170" cy="170" r="150"/>
+        <text class="loop-center-word" x="170" y="164" text-anchor="middle">Craft</text>
+        <text class="loop-center-word" x="170" y="192" text-anchor="middle">loop</text>
+
+        <g>
+          <circle class="loop-node" cx="170" cy="20" r="22"/>
+          <circle class="loop-node-dot" cx="170" cy="20" r="4"/>
+          <text class="loop-center-label" x="170" y="55" text-anchor="middle">Research</text>
+        </g>
+        <g>
+          <circle class="loop-node" cx="313" cy="98" r="22"/>
+          <circle class="loop-node-dot" cx="313" cy="98" r="4"/>
+          <text class="loop-center-label" x="313" y="133" text-anchor="middle">Design</text>
+        </g>
+        <g>
+          <circle class="loop-node" cx="313" cy="242" r="22"/>
+          <circle class="loop-node-dot" cx="313" cy="242" r="4"/>
+          <text class="loop-center-label" x="313" y="277" text-anchor="middle">Build</text>
+        </g>
+        <g>
+          <circle class="loop-node" cx="170" cy="320" r="22"/>
+          <circle class="loop-node-dot" cx="170" cy="320" r="4"/>
+          <text class="loop-center-label" x="170" y="308" text-anchor="middle" dy="-40">Launch</text>
+        </g>
+        <g>
+          <circle class="loop-node" cx="27" cy="242" r="22"/>
+          <circle class="loop-node-dot" cx="27" cy="242" r="4"/>
+          <text class="loop-center-label" x="27" y="277" text-anchor="middle">Grow</text>
+        </g>
+        <g>
+          <circle class="loop-node" cx="27" cy="98" r="22"/>
+          <circle class="loop-node-dot" cx="27" cy="98" r="4"/>
+          <text class="loop-center-label" x="27" y="133" text-anchor="middle">Test</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <div class="wrap divider"></div>
+
+  <!-- WORK -->
+  <section id="work" class="section-pad wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Selected work</div>
+      <h2>Seven briefs, seven different businesses.</h2>
+      <p>A sample of live projects across real estate, luxury transport, personal-care and professional-services brands — each built for a specific conversion goal, not a generic template.</p>
+    </div>
+
+    <div class="work-grid">
+
+      <div class="card">
+        <div class="card-visual" style="background:linear-gradient(135deg,#2a2320,#0e1015);">
+          <div class="browser-bar"><div class="glyph"><img src="./Ewaduras-–-Ewaduras-08-25-2026_05_48_PM.png" alt=""></div></div>
+          
+        </div>
+        <div class="card-body">
+          <div class="card-industry">Real Estate &amp; Business Services</div>
+          <h3>Ewaduras LLC</h3>
+          <p>Multi-service platform unifying property listings, consulting and coaching offers with a searchable listings experience.</p>
+          <a class="card-link" href="https://ewadurasllc.com/" target="_blank" rel="noopener">View live site ↗</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-visual" style="background:linear-gradient(135deg,#1c1c22,#0e1015);">
+           <div class="browser-bar"><div class="glyph"><img src="./Luxury-Limousine-Limo-Service-New-York-The-Luxury-Cab-08-25-2026_05_50_PM.png" alt=""></div></div>
+        </div>
+        <div class="card-body">
+          <div class="card-industry">Luxury Transportation</div>
+          <h3>The Luxury Cab</h3>
+          <p>Premium chauffeur &amp; airport-transfer site with fleet showcase and a custom instant-quote plugin built from scratch.</p>
+          <a class="card-link" href="https://theluxurycab.com/" target="_blank" rel="noopener">View live site ↗</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-visual" style="background:linear-gradient(135deg,#232019,#0e1015);">
+           <div class="browser-bar"><div class="glyph"><img src="./The-Yard-Builders-Merchant-Building-Materials-in-UK-08-25-2026_05_50_PM.png" alt=""></div></div>
+        </div>
+        <div class="card-body">
+          <div class="card-industry">Business / Commercial</div>
+          <h3>The Yard BM</h3>
+          <p>Clean brand-forward layout built to make a commercial service offering easy to scan and easy to trust.</p>
+          <a class="card-link" href="https://theyardbm.co.uk/" target="_blank" rel="noopener">View live site ↗</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-visual" style="background:linear-gradient(135deg,#1e2420,#0e1015);">
+            <div class="browser-bar"><div class="glyph"><img src="./Lynda-Mobile-Notary-08-25-2026_05_51_PM.png" alt=""></div></div>
+        </div>
+        <div class="card-body">
+          <div class="card-industry">Mobile Notary Services</div>
+          <h3>Lynda Mobile Notary</h3>
+          <p>Trust-first, mobile-optimised service site engineered for one job: getting a visitor to submit an inquiry.</p>
+          <a class="card-link" href="https://lyndamobilenotary.com/" target="_blank" rel="noopener">View live site ↗</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-visual" style="background:linear-gradient(135deg,#241c22,#0e1015);">
+           <div class="browser-bar"><div class="glyph"><img src="./Lior-Luxe-Studio-Med-Spa-Luxury-Medical-Aesthetics-Wellness-08-25-2026_05_51_PM.png" alt=""></div></div>
+        </div>
+        <div class="card-body">
+          <div class="card-industry">Beauty / Luxury Lifestyle</div>
+          <h3>Lior Luxe Studio</h3>
+          <p>Image-led, premium brand presence with an editorial layout built around the studio's visual identity.</p>
+          <a class="card-link" href="https://liorluxestudio.com/" target="_blank" rel="noopener">View live site ↗</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-visual" style="background:linear-gradient(135deg,#201c24,#0e1015);">
+           <div class="browser-bar"><div class="glyph"><img src="./Best-Hair-Salon-Fort-Lauderdale-Randy-Schull-Stylist-08-25-2026_05_51_PM.png" alt=""></div></div>
+        </div>
+        <div class="card-body">
+          <div class="card-industry">Hair Salon / Beauty</div>
+          <h3>Randy Schull Salon</h3>
+          <p>Stylist-led personal brand site pairing service menus with a booking-focused call to action.</p>
+          <a class="card-link" href="https://randyschullsalon.com/" target="_blank" rel="noopener">View live site ↗</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-visual" style="background:linear-gradient(135deg,#1c2024,#0e1015);">
+          <div class="browser-bar"><div class="glyph"><img src="./Jenifer-Gomes-08-25-2026_05_52_PM.png" alt=""></div></div>
+        </div>
+        <div class="card-body">
+          <div class="card-industry">Personal Brand</div>
+          <h3>Jenifer Gomes</h3>
+          <p>A polished personal website establishing professional credibility with a clear about-and-offerings narrative.</p>
+          <a class="card-link" href="https://www.jenifergomes.com/" target="_blank" rel="noopener">View live site ↗</a>
+        </div>
+      </div>
+
+    </div>
+    <p class="note-line">Card visuals above are stand-ins — swap in real screenshots of each site once this is live (see the note at the end of this chat for how).</p>
+  </section>
+
+  <div class="wrap divider"></div>
+
+  <!-- PROCESS -->
+  <section id="process" class="section-pad wrap">
+    <div class="sec-head">
+      <div class="eyebrow">How a project runs</div>
+      <h2>The loop, in five stages.</h2>
+      <p>Every Craftloop project moves through the same sequence — it's what keeps a 40-site track record consistent.</p>
+    </div>
+    <div class="process-list">
+      <div class="p-step">
+        <div class="p-num">01</div>
+        <div><div class="p-title">Research &amp; Strategy</div><div class="p-desc">Understanding the business, target audience, competitors, and the site's primary goal before any design starts.</div></div>
+      </div>
+      <div class="p-step">
+        <div class="p-num">02</div>
+        <div><div class="p-title">UI/UX Design</div><div class="p-desc">A clean, modern, intuitive experience shaped around the brand — usually from Figma before it ever touches WordPress.</div></div>
+      </div>
+      <div class="p-step">
+        <div class="p-num">03</div>
+        <div><div class="p-title">Development</div><div class="p-desc">Responsive, functional builds in Elementor, WooCommerce or custom code — optimised for desktop, tablet and mobile.</div></div>
+      </div>
+      <div class="p-step">
+        <div class="p-num">04</div>
+        <div><div class="p-title">Conversion Focus</div><div class="p-desc">Calls-to-action, contact forms and service information placed with intent — the site's job is to generate inquiries.</div></div>
+      </div>
+      <div class="p-step">
+        <div class="p-num">05</div>
+        <div><div class="p-title">Testing &amp; Optimization</div><div class="p-desc">Responsiveness, navigation and functionality checked end-to-end before launch — then the loop starts again.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap divider"></div>
+
+  <!-- INDUSTRIES -->
+  <section id="industries" class="section-pad wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Where the work lives</div>
+      <h2>Industries &amp; project types.</h2>
+    </div>
+    <div class="tag-cloud">
+      <span class="tag">Real Estate</span>
+      <span class="tag">Luxury Transportation</span>
+      <span class="tag">Professional Services</span>
+      <span class="tag">Notary Services</span>
+      <span class="tag">Beauty &amp; Salon</span>
+      <span class="tag">Personal Branding</span>
+      <span class="tag">Small &amp; Local Business</span>
+      <span class="tag">E-commerce</span>
+      <span class="tag">Website Redesigns</span>
+      <span class="tag">Booking &amp; Inquiry Sites</span>
+    </div>
+  </section>
+
+  <div class="wrap divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section-pad wrap">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="eyebrow">Let's build your next website</div>
+        <h2>Tell me about the project.</h2>
+        <p>Looking for a modern, conversion-focused website for your business or personal brand? Send over the brief — I usually reply within a day.</p>
+
+        <div class="info-row"><span class="k mono">Based in</span><span class="v">Ghaziabad, Delhi NCR, India</span></div>
+        <div class="info-row"><span class="k mono">Email</span><a class="v" href="mailto:hello@craftloopdigital.com">hello@craftloopdigital.com</a></div>
+        <div class="info-row"><span class="k mono">Elsewhere</span><span class="v">Upwork · Fiverr</span></div>
+      </div>
+
+      <form action="https://formspree.io/f/mwledgqv" method="POST">
+        <div class="form-row">
+          <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your full name" required>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@company.com" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="service">Project type</label>
+            <select id="service" name="service">
+              <option>New WordPress website</option>
+              <option>WooCommerce store</option>
+              <option>Redesign of existing site</option>
+              <option>Custom plugin / integration</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="budget">Budget range</label>
+            <select id="budget" name="budget">
+              <option>Under $500</option>
+              <option>$500 – $1,500</option>
+              <option>$1,500 – $5,000</option>
+              <option>$5,000+</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label for="message">Project details</label>
+          <textarea id="message" name="message" placeholder="Tell me a bit about the business and what the site needs to do..." required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send inquiry</button>
+        <p class="form-status" id="formStatus"></p>
+        <p class="form-note">Submissions are delivered straight to my inbox via Formspree — no data stored on this site.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span class="mono">© <span id="year"></span> Craftloop Digital — Himanshu Verma</span>
+    <div class="footer-links">
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const form = document.getElementById('contactForm');
+  const status = document.getElementById('formStatus');
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    status.textContent = 'Sending...';
+    status.className = 'form-status';
+    try{
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if(res.ok){
+        status.textContent = 'Thanks — your message is on its way. I\'ll reply soon.';
+        status.className = 'form-status ok';
+        form.reset();
+      } else {
+        status.textContent = 'Something went wrong. Please email hello@craftloopdigital.com directly.';
+        status.className = 'form-status err';
+      }
+    } catch(err){
+      status.textContent = 'Network error — please try again or email directly.';
+      status.className = 'form-status err';
+    }
+  });
+</script>
+
+</body>
+</html>
